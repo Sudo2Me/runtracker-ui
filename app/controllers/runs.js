@@ -5,7 +5,9 @@ import { isEmpty } from '@ember/utils';
 import { tracked } from '@glimmer/tracking';
 
 export default class RunsController extends Controller {
-  @tracked debouncedFilter;
+  @tracked debouncedFilter = '';
+  @tracked settings = {};
+  @tracked isSettingsPanelExpanded = false;
 
   @computed('debouncedFilter', 'model.[]')
   get filteredRuns() {
@@ -25,5 +27,15 @@ export default class RunsController extends Controller {
   @action
   filterKeypress() {
     debounce(this, this.updateFilter, 200);
+  }
+
+  @action
+  toggleSettingsPanel() {
+    this.isSettingsPanelExpanded = !this.isSettingsPanelExpanded;
+  }
+
+  @action
+  settingsChange(settings) {
+    this.settings = settings;
   }
 }
